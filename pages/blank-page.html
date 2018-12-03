@@ -343,7 +343,7 @@
                         <div class="card-body">
                             <h3 class="card-title">Card title</h3>
                             <p id="ip-data" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary" onclick=run()>Go somewhere</a>
+                            <a href="#" class="btn btn-primary" onclick=runAjax();>Go somewhere</a>
                         </div>
                     </div>
                 </div>
@@ -380,16 +380,42 @@
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="../assets/libs/js/main-js.js"></script>
-    <script src="../assets/libs/js/request.js"></script>
+ 
 
     <script>
-        var input = $('#ip_input');
-                        input.inputmask({
-                            alias: "ip",
-                            greedy: false, //The initial mask shown will be "" instead of "-____".,
-                                });
         
 
+
+var option = {
+    url : "http://lumtest.com/myip.json"
+}
+                                 
+        function runAjax(option) {
+
+    
+        //dataString = JSON.stringify(request);
+        
+        $.ajax({ // ajax call starts
+        url: 'http://127.0.0.1:8080',   // JQuery call to the server side method
+        data: option,    // the parameters sent to the server
+        type: 'GET',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        timeout: 50000, // timeout in miliseconds
+        success: function (result){
+           var v =  JSON.stringify(result);
+            console.log(v.responseText)
+        }, // 
+        error: function(result){
+            var v =  JSON.stringify(result);
+            console.log(v)
+            //console.log('error')
+        },
+        // complete: function () {
+        //             window.location.href = "http://127.0.0.1:8081";
+        //         }
+})// end of ajax call
+}
     </script>
 </body>
  
