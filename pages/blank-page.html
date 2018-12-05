@@ -329,10 +329,11 @@
                 <div class="row">
                     <div class="col-xl-6 col-lg- col-md-12 col-sm-12 col-12" style="margin:0 auto">
                         <h3 class="text-center">Content goes here!</h3>
-                        <form>
+                        <form action="http://127.0.0.1:8080/assets/libs/js/server.js" method="GET">
                             <div class="form-group">
                                 <label for="inputText3" class="col-form-label">Enter IP Address</label>
                                 <input id="ip_input" type="text" class="form-control" placeholder="IP Goes Here..." required pattern="^([0-9]{1,3}\.){3}[0-9]{1,3}$">
+                                <button  class="btn btn-primary" >Go somewhere</button>
                             </div>
                         </form>
                     </div>
@@ -341,9 +342,9 @@
                 <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 col-12"style="margin:0 auto">
                     <div class="card">
                         <div class="card-body">
-                            <h3 class="card-title">Card title</h3>
+                            <h3 id="title" class="card-title">Card title</h3>
                             <p id="ip-data" class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="btn btn-primary" onclick=runAjax();>Go somewhere</a>
+                            <a href="#" id="run" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
                 </div>
@@ -380,42 +381,53 @@
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
     <script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
     <script src="../assets/libs/js/main-js.js"></script>
- 
+    
 
     <script>
-        
+        $('#run').on('click',function(){
+           // var ip_input = document.getElementById('ip_input');
+            let xhr = new XMLHttpRequest();
+            let ipinput = ip_input.value;
+            const proxyurl = "https://cors-anywhere.herokuapp.com/";
+            const url = "http://proxycheck.io/v2/"+ipinput+"?key=446704-298402-570002-06g06y&vpn=1&asn=1&node=1&time=1&inf=0&port=1&seen=1&days=7&tag=msg";
+            xhr.open("GET",proxyurl+url); // assuming you’re hosting it locally
+            xhr.send()
+            xhr.onreadystatechange=(e)=>{
+            let ip =  xhr.responseText
+           //let title =  document.getElementById("title");
+           //title.innerHTML = ip.ip_input;
+           console.log(ip);
+                }
+            });
 
+// $('#run').click(function() {
+//         $.ajax({
+//             type: 'GET',
+//             url: '/assets/libs/js/server.js',
+//             //data: $('#myField').text(),
+//             success: function(result) {
+//               console.log('Response:', result);
+//             },
+//             error : function(error){
+//                 console.log(error)
+//             }
+//         }
+//     )});
 
-var option = {
-    url : "http://lumtest.com/myip.json"
-}
-                                 
-        function runAjax(option) {
+// var xhr = new XMLHttpRequest();
+// xhr.open('GET', "../assets/libs/js/server.js", true);
+// xhr.send();
+ 
+// xhr.onreadystatechange = processRequest;
+// function processRequest(e) {
+//     if (xhr.readyState == 4 && xhr.status == 200) {
+//         var response = xhr.responseText;
+//         alert(response);
+//     }
+// }
 
-    
-        //dataString = JSON.stringify(request);
-        
-        $.ajax({ // ajax call starts
-        url: 'http://127.0.0.1:8080',   // JQuery call to the server side method
-        data: option,    // the parameters sent to the server
-        type: 'GET',        // can be post or get
-        dataType: 'json',    // Choosing a JSON datatype
-        contentType: 'application/json; charset = utf-8', // of the data received
-        timeout: 50000, // timeout in miliseconds
-        success: function (result){
-           var v =  JSON.stringify(result);
-            console.log(v.responseText)
-        }, // 
-        error: function(result){
-            var v =  JSON.stringify(result);
-            console.log(v)
-            //console.log('error')
-        },
-        // complete: function () {
-        //             window.location.href = "http://127.0.0.1:8081";
-        //         }
-})// end of ajax call
-}
+// }
+
     </script>
 </body>
  
