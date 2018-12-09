@@ -7939,9 +7939,7 @@ Media Query
       background: #efc247;
     }
   }
-  body {
-    margin: 0;
-  }
+
   body .outer {
     position: absolute;
     top: 50%;
